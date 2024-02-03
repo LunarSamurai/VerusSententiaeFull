@@ -1,0 +1,456 @@
+﻿<Window x:Class="VerusSententiaeFull.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VerusSententiaeFull"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        WindowStyle="None"
+        Title="MainWindow" Height="450" Width="800"        
+        >
+
+    <Window.Resources>
+        <local:RoundToThousandthConverter x:Key="RoundToThousandthConverter"/>
+        <Storyboard x:Key="BlinkAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="1.0" To="0.0" Duration="0:0:1"
+                         AutoReverse="True" RepeatBehavior="Forever"/>
+        </Storyboard>
+
+        <Style x:Key="SliderThumbStyle" TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Border Background="DodgerBlue" Width="50" Height="50" CornerRadius="10"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Custom Slider Style -->
+        <Style x:Key="SliderStyle" TargetType="Slider">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Slider">
+                        <Grid>
+                            <!-- Custom Track -->
+                            <Border Background="Transparent" VerticalAlignment="Center" Height="20">
+                                <Border Background="WhiteSmoke" BorderBrush="Black" BorderThickness="1" Height="14" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <!-- Functional Track -->
+                            <Track x:Name="PART_Track" VerticalAlignment="Center">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Opacity="0" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource SliderThumbStyle}" />
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Opacity="0" />
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RepeatButtonStyle" TargetType="RepeatButton">
+            <Setter Property="Opacity" Value="0"/>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+        <Grid x:Name="TitleScreen" KeyDown="MainWindow_KeyDown" Focusable="True">
+            <Grid.RowDefinitions>
+                <!-- Row 1: Takes a certain proportion of the space -->
+                <RowDefinition Height="Auto"/>
+                <!-- Row 2: Takes a smaller fixed space for separation -->
+                <RowDefinition Height="Auto"/>
+                <!-- Row 3: Takes a larger proportion of the space -->
+                <RowDefinition Height="3*"/>
+                <!-- Row 4: Takes another proportion of the space -->
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Verus Sententiae" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Basic" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="300,-10,0,0" Loaded="TextBlock_Loaded"/>
+            <Canvas x:Name="triangleCanvas" Grid.RowSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Path x:Name="dynamicTriangle" Fill="Black">
+                    <Path.Data>
+                        <!-- This PathGeometry will need to be dynamically generated or updated in code-behind or using a ViewModel -->
+                        <PathGeometry Figures="M0,0 L0,1 0.5,0.5 Z" />
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Grid>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded" Foreground="White" Margin="0,850,0,0"/>
+        <!-- Splash Screen -->
+        <Grid x:Name="SplashScreen" Background="Black">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border Width="1400" Height="300" HorizontalAlignment="Center"  Margin="0,100,0,0" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="15">
+                    <Image x:Name="img" Width="1400">
+                        <Image.OpacityMask>
+                            <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.53" RadiusY="0.5">
+                                <GradientStop Color="#FFFFFFFF" Offset="0.0" />
+                                <GradientStop Color="#00FFFFFF" Offset="1.0" />
+                            </RadialGradientBrush>
+                        </Image.OpacityMask>
+                        <Image.Source>
+                            <BitmapImage UriSource="/logo.gif"/>
+                        </Image.Source>
+                    </Image>
+                </Border>
+            </StackPanel>
+            <TextBlock Text="Verus Sententiae Project" Foreground="Green" FontSize="70" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,105,0,0" Height="86" Width="780">
+            </TextBlock>
+            <TextBlock Text="Verus Sententiae Project" Foreground="White" FontSize="70" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,105,0,0">
+                <TextBlock.Effect>
+                    <DropShadowEffect x:Name="GlowEffect" Color="Green" ShadowDepth="0" BlurRadius="40" Opacity="0.8"/>
+                </TextBlock.Effect>
+                <TextBlock.Triggers>
+                    <EventTrigger RoutedEvent="TextBlock.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever">
+                                <DoubleAnimation Storyboard.TargetName="GlowEffect" 
+                                     Storyboard.TargetProperty="BlurRadius" 
+                                     From="20" To="25" 
+                                     Duration="0:0:1" 
+                                     AutoReverse="True"/>
+                                <DoubleAnimation Storyboard.TargetName="GlowEffect" 
+                                     Storyboard.TargetProperty="Opacity" 
+                                     From="0.8" To="1" 
+                                     Duration="0:0:1" 
+                                     AutoReverse="True"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </TextBlock.Triggers>
+            </TextBlock>
+
+        </Grid>
+        
+        <Grid x:Name="Introducer" Visibility="Collapsed" KeyDown="MainWindow_PostNum_KeyDown" Focusable="True">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="SAM" FontSize="74" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Self Assessment Manikin" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-10,0,0" Loaded="TextBlock_Loaded"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Please write down the following number as your Participant Number." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="3" x:Name="SamCodeTextBlock" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+        </Grid>
+
+        <Grid x:Name="PreVideoPlayerGrid" Visibility="Collapsed" KeyDown="MainWindow_PlayIntroductionVideo" Focusable="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="68" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Underline>
+                    Video Introduction
+                </Underline>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Please watch the following video." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+        
+        </Grid>
+        <Grid x:Name="VideoPlayerGrid">
+            <MediaElement Grid.Row="2" x:Name="VideoPlayer" LoadedBehavior="Manual" MediaEnded="VideoPlayer_MediaEnded" Margin="0,0,0,0" Stretch="UniformToFill" Focusable="True" KeyDown="SkipVideo" />
+        </Grid>
+        <Grid x:Name="DemoIntroducer" Visibility="Collapsed" KeyDown="MainWindow_DemoIntroducer" Focusable="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0"  FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Underline>
+                    Demo Trials
+                </Underline>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="You are about to begin the prebuilt sample trials designed to get you familiarized with the layout of this evaluation." FontSize="42" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="50"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="This examination will be written on paper. " FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+        </Grid>
+        <Grid x:Name="DemoTrailIntroductionStepTwo" Visibility="Collapsed" KeyDown="MainWindow_DemoIntroducerPartTwo" Focusable="True" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0"  FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Underline>
+                    Demo Trials
+                </Underline>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+               Text="Prepare yourself, when you continue from this screen you will hear a sound. Please rate the sound based on the Valence, Arousal, and Significance in the proceeding screens that follow. Please continue when you are ready." 
+               FontSize="42" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               TextWrapping="Wrap" 
+               TextAlignment="Center"
+               Margin="200" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+        </Grid>
+        <Grid x:Name="TrialAudio" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="Demo_Trails_Title" Grid.Row="0" Grid.Column="0" Text="Trial Audio" FontSize="76" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Please rate the following sound based on the Valence, Arousal, and Significance." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        
+        </Grid>
+        <Grid x:Name="ValenceRatingGrid" Visibility="Collapsed" KeyUp="MainWindow_ValenceRating" Focusable="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="550"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Please Rate based on Valence" 
+                   FontSize="56"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top"
+                   Grid.Row="0"/>
+
+            <TextBlock x:Name="versionNumValence" Text="(VersionNumValence)"
+                   FontSize="42"
+                   FontWeight="Bold"                  
+                       />
+            
+            <TextBlock Text="Please use your keyboard to type your response."
+                   FontSize="30" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top"
+                   Grid.Row="1"/>
+
+            <!-- Image control to display your picture -->
+            <Image x:Name="ValenceImage" 
+                    Source="/CorrectedValence.png"  
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Grid.Row="2"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Press a key 1 - 9 to continue." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+            <!-- Add your rating controls below the image -->
+        </Grid>
+        <Grid x:Name="ArousalRatingGrid" Visibility="Collapsed" KeyUp="MainWindow_ArousalRating" Focusable="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="550"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Please Rate based on Arousal
+" 
+                   FontSize="56"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top"
+                   Grid.Row="0"/>
+            
+            <TextBlock x:Name="versionNumArousal" Text="(VersionNumArousal)"
+                   FontSize="42"
+                   FontWeight="Bold"                  
+                       />
+
+            <TextBlock Text="Please use your keyboard to type your response."
+                   FontSize="30" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top"
+                   Grid.Row="1"/>
+
+            <!-- Image control to display your picture -->
+            <Image x:Name="ArousalImage" 
+                    Source="\SAM_Resources\ArousalImage\CorrectedArousal.png"  
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Grid.Row="2"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Press a key 1 - 9 to continue." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+
+            <!-- Add your rating controls below the image -->
+        </Grid>
+        <Grid x:Name="SignificanceRatingGrid" Visibility="Collapsed" KeyUp="MainWindow_SignificanceRating" Focusable="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="550"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Please Rate based on Significance
+" 
+                   FontSize="56"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top"
+                   Grid.Row="0"/>
+
+            <TextBlock x:Name="versionNumSignificance" Text="(VersionNumSignificance)"
+                   FontSize="42"
+                   FontWeight="Bold"                  
+                       />
+
+            <TextBlock Text="Please use your keyboard to type your response."
+                   FontSize="30" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top"
+                   Grid.Row="1"/>
+
+            <!-- Slider with labels for significance -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- TextBlock for "Least Significant" -->
+                <TextBlock Text="Least Significant"
+                   FontSize="42"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Margin="50,0,50,480"
+                   Grid.Column="0"/>
+
+                <!-- Slider -->
+                <Slider x:Name="SignificanceSlider" 
+                    PreviewKeyDown="SignificanceSlider_PreviewKeyDown"
+                    Focusable="False"
+                    Style="{StaticResource SliderStyle}"
+                    Width="1000"
+                    Height="60"                  
+                    Orientation="Horizontal"
+                    Minimum="0" 
+                    Maximum="1000"
+                    Value="0"
+                    TickFrequency="1"
+                    IsSnapToTickEnabled="True"
+                    SmallChange=".1"
+                    LargeChange="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="20,10, 90, 0"
+                    ValueChanged="SignificanceSlider_ValueChanged"
+                    Grid.Column="1"/>
+
+                <!-- TextBlock for "Most Significant" -->
+                <TextBlock Text="Most Significant"
+                   FontSize="42"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="10,-460,40,20"
+                   Grid.Column="3"/>
+
+                <TextBlock x:Name="sliderSignificanceTextBlock"
+                   Text="{Binding ElementName=SignificanceSlider, Path=Value, Converter={StaticResource RoundToThousandthConverter}}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="80,60,0,0"
+                   FontSize="42"
+                   Grid.Column="1"/>
+            </Grid>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+
+            <!-- Add your rating controls below the image -->
+        </Grid>
+        <Grid x:Name="TrueTrialIntroduction" Visibility="Collapsed" KeyDown="MainWindow_TrueTrialIntroduction" Focusable="True" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="76" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Underline>
+                    Trials
+                </Underline>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+               Text="You will now begin the Actual Examination. If you have any questions about the previous section please contact your exam guide immediately. If not, please continue."
+               FontSize="42" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               TextWrapping="Wrap" 
+               TextAlignment="Center"
+               Margin="200" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+        </Grid>
+        <Grid x:Name="TrueTrialIntroductionStepTwo" Visibility="Collapsed" KeyDown="MainWindow_TrueTrialIntroductionStepTwo" Focusable="True" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="76" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Underline>
+                    Trials
+                </Underline>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+               Text="Prepare yourself, when you continue from this screen you will hear a sound. Please rate the sound based on the Valence, Arousal, and Significance in the proceeding screens that follow." 
+               FontSize="42" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               TextWrapping="Wrap" 
+               TextAlignment="Center"
+               Margin="200" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Please continue when you are ready." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+        </Grid>
+        <Grid x:Name="TrueTrialEnder" Visibility="Collapsed" KeyDown="MainWindow_TrueTrialEnder" Focusable="True" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="76" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Underline>
+                    Thank you!
+                </Underline>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+               Text="Thank you for taking the evaluation with us today." 
+               FontSize="42" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               TextWrapping="Wrap" 
+               TextAlignment="Center"
+               Margin="200" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Please continue when you are ready." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+        </Grid>
+    </Grid>
+</Window>

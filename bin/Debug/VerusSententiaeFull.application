@@ -9,14 +9,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="VerusSententiaeFull.exe.manifest" size="8761">
+    <dependentAssembly dependencyType="install" codebase="VerusSententiaeFull.exe.manifest" size="7522">
       <assemblyIdentity name="VerusSententiaeFull.exe" version="1.0.0.26" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>W1LPGSXGouikWcWmmxL46V2oAPNWgwcNDKd3tOjY1UM=</dsig:DigestValue>
+        <dsig:DigestValue>TtAeNDWr+KHRNBfULRb9ptKQbeF3dZFZQQ070scOl3M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -8,9 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sam_resources/audio_files/102.wav")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sam_resources/audio_files/104.wav")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sam_resources/audio_files/105.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sam_resources/audio_files/trial_1.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sam_resources/audio_files/trial_2.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sam_resources/introductionvideo/verussententiae.mp4")]

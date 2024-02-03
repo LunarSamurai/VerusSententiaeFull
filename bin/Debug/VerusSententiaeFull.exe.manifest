@@ -50,7 +50,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SnSNxzbOEMhoQ643VqAfmf8LlrmoItfWU7tT2GmgKbQ=</dsig:DigestValue>
+        <dsig:DigestValue>Mxqz6N6MixOsk0xCXO0C94t7sYR2sKR+UDO8RJ8X9PY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -75,58 +75,31 @@
       <dsig:DigestValue>0W0Jxn5lkqCLwgdkbHTP+vtpm3KXaITmdIV8UFYZe68=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SAM_Resources\Audio_Files\102.wav" size="269612">
+  <file name="SAM_Resources\Audio_Files\trial_1.wav" size="235406">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>b/ZnnuHq9tgymAbDgD7/4R8JAFKJExHy2bCMlV4fQvM=</dsig:DigestValue>
+      <dsig:DigestValue>o0GW5nvtnqQlS+tPYCNEDlxEFcrgi+nL61gppk8B8yo=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SAM_Resources\Audio_Files\104.wav" size="131592">
+  <file name="SAM_Resources\Audio_Files\trial_2.wav" size="158446">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>0GAaDRsNZiY+DOw34Aano7QJ7lahiiNYtmjtxohUSss=</dsig:DigestValue>
+      <dsig:DigestValue>6DGpBJVlZUDjlhrkLpGk7SRfSKzh9HezQcaU6C2MkVA=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SAM_Resources\Audio_Files\105.wav" size="530050">
+  <file name="SAM_Resources\IntroductionVideo\VerusSententiae.mp4" size="9065785">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>p67s/w1fWgEIhzUcYVhlBxAG3+p7kzOJhn+xkabYnw0=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="SAM_Resources\Audio_Files\trial_1.wav" size="470730">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>sLJonn9ncdaNdqLiAuvI8v27mO0NaGTZ4dlo7eVrd7Y=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="SAM_Resources\Audio_Files\trial_2.wav" size="407528">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>NpUSTQbXjlDQXllLKW6xhsdETHQl+JrewzGqqqmmHJE=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="SAM_Resources\IntroductionVideo\VerusSententiae.mp4" size="8048864">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>nXN1dAqhwzvNcBYA1Xc7yZSORSoEEsoVLlGzXNIyCqs=</dsig:DigestValue>
+      <dsig:DigestValue>ZQADBy/b/3Ho8FRgFFpLy+/aYEGyzbWqYE1BGCV9NtM=</dsig:DigestValue>
     </hash>
   </file>
   <file name="SAM_Resources\ValenceImage\CorrectedValence.png" size="108489">
