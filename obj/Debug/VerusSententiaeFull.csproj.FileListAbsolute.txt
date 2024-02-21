@@ -3,7 +3,6 @@ C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull
 C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\obj\Debug\Notification.g.cs
 C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\obj\Debug\App.g.cs
 C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\obj\Debug\VerusSententiaeFull_Content.g.cs
-C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\obj\Debug\VerusSententiaeFull_MarkupCompile.cache
 C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\obj\Debug\VerusSententiaeFull_MarkupCompile.lref
 C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\obj\Debug\MainWindow.baml
@@ -27,3 +26,6 @@ C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull
 C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\bin\Debug\WpfAnimatedGif.xml
 C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\obj\Debug\VerusSententiaeFull.application
 C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\obj\Debug\VerusSententiaeFull.csproj.CopyComplete
+C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\bin\Debug\CorrectedValence.png
+C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\bin\Debug\SAM_Resources\ArousalImage\CorrectedArousal.png
+C:\Users\josep\Documents\DevProjects\VerusSententiaePlatform\VerusSententiaeFull\bin\Debug\logo.gif

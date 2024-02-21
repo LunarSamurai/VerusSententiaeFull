@@ -11,7 +11,6 @@
         >
 
     <Window.Resources>
-        <local:RoundToThousandthConverter x:Key="RoundToThousandthConverter"/>
         <Storyboard x:Key="BlinkAnimation">
             <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
                          From="1.0" To="0.0" Duration="0:0:1"
@@ -93,16 +92,13 @@
         <Grid x:Name="SplashScreen" Background="Black">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Border Width="1400" Height="300" HorizontalAlignment="Center"  Margin="0,100,0,0" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="15">
-                    <Image x:Name="img" Width="1400">
+                    <Image x:Name="img" Width="1400" Source="/logo.gif">
                         <Image.OpacityMask>
                             <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.53" RadiusY="0.5">
                                 <GradientStop Color="#FFFFFFFF" Offset="0.0" />
                                 <GradientStop Color="#00FFFFFF" Offset="1.0" />
                             </RadialGradientBrush>
                         </Image.OpacityMask>
-                        <Image.Source>
-                            <BitmapImage UriSource="/logo.gif"/>
-                        </Image.Source>
                     </Image>
                 </Border>
             </StackPanel>
@@ -133,7 +129,7 @@
             </TextBlock>
 
         </Grid>
-        
+
         <Grid x:Name="Introducer" Visibility="Collapsed" KeyDown="MainWindow_PostNum_KeyDown" Focusable="True">
 
             <Grid.RowDefinitions>
@@ -167,7 +163,7 @@
             </TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Please watch the following video." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
-        
+
         </Grid>
         <Grid x:Name="VideoPlayerGrid">
             <MediaElement Grid.Row="2" x:Name="VideoPlayer" LoadedBehavior="Manual" MediaEnded="VideoPlayer_MediaEnded" Margin="0,0,0,0" Stretch="UniformToFill" Focusable="True" KeyDown="SkipVideo" />
@@ -185,8 +181,8 @@
                     Demo Trials
                 </Underline>
             </TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="You are about to begin the prebuilt sample trials designed to get you familiarized with the layout of this evaluation." FontSize="42" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="50"/>
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="This examination will be written on paper. " FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="You are about to begin the prebuilt sample trials designed to get you familiarized with the layout of this task." FontSize="42" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="50"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Please use your keyboard to complete this task." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
         </Grid>
         <Grid x:Name="DemoTrailIntroductionStepTwo" Visibility="Collapsed" KeyDown="MainWindow_DemoIntroducerPartTwo" Focusable="True" >
@@ -222,7 +218,7 @@
 
             <TextBlock x:Name="Demo_Trails_Title" Grid.Row="0" Grid.Column="0" Text="Trial Audio" FontSize="76" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Please rate the following sound based on the Valence, Arousal, and Significance." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        
+
         </Grid>
         <Grid x:Name="ValenceRatingGrid" Visibility="Collapsed" KeyUp="MainWindow_ValenceRating" Focusable="True">
             <Grid.RowDefinitions>
@@ -243,7 +239,7 @@
                    FontSize="42"
                    FontWeight="Bold"                  
                        />
-            
+
             <TextBlock Text="Please use your keyboard to type your response."
                    FontSize="30" 
                    HorizontalAlignment="Center" 
@@ -274,7 +270,7 @@
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Top"
                    Grid.Row="0"/>
-            
+
             <TextBlock x:Name="versionNumArousal" Text="(VersionNumArousal)"
                    FontSize="42"
                    FontWeight="Bold"                  
@@ -369,7 +365,7 @@
                    Grid.Column="3"/>
 
                 <TextBlock x:Name="sliderSignificanceTextBlock"
-                   Text="{Binding ElementName=SignificanceSlider, Path=Value, Converter={StaticResource RoundToThousandthConverter}}"
+                   Text="{Binding ElementName=SignificanceSlider, Path=Value}"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Margin="80,60,0,0"
@@ -395,7 +391,7 @@
                 </Underline>
             </TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="0" 
-               Text="You will now begin the Actual Examination. If you have any questions about the previous section please contact your exam guide immediately. If not, please continue."
+               Text="You will now begin the Experimental Task. If you have any questions about the previous section please contact your task guide immediately. If not, please continue."
                FontSize="42" 
                HorizontalAlignment="Center" 
                VerticalAlignment="Center"
@@ -427,6 +423,28 @@
                Margin="200" />
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Please continue when you are ready." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+        </Grid>
+        <Grid x:Name="BreakScreenInterlude" Visibility="Collapsed" KeyDown="MainWindow_BreakScreenInterlude" Focusable="True" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="76" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Underline>
+                    Thank you!
+                </Underline>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+               Text="Please take a rest during this time." 
+               FontSize="42" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               TextWrapping="Wrap" 
+               TextAlignment="Center"
+               Margin="200" />
         </Grid>
         <Grid x:Name="TrueTrialEnder" Visibility="Collapsed" KeyDown="MainWindow_TrueTrialEnder" Focusable="True" >
             <Grid.RowDefinitions>

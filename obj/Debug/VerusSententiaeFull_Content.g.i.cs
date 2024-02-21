@@ -8,9 +8,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("correctedvalence.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("logo.gif")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sam_resources/audio_files/trial_1.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sam_resources/audio_files/trial_2.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sam_resources/introductionvideo/verussententiae.mp4")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sam_resources/arousalimage/correctedarousal.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sam_resources/valenceimage/correctedvalence.png")]
 
 

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="VerusSententiaeFull.exe" version="1.0.0.26" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="VerusSententiaeFull.exe" version="1.0.0.33" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="icons8-european-dragon-48.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VerusSententiaeFull.exe" size="1007584">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VerusSententiaeFull.exe" size="66528">
       <assemblyIdentity name="VerusSententiaeFull" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Mxqz6N6MixOsk0xCXO0C94t7sYR2sKR+UDO8RJ8X9PY=</dsig:DigestValue>
+        <dsig:DigestValue>xnfSYzyQBhBT0lvmnmD3BEzARpZcbhnyRXHxpoSTuu4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -66,6 +66,15 @@
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="CorrectedValence.png" size="108489">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>DeCObkoBed25xI4NAwz0jDQZyqM1JCeXvNvmWy1LDs0=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="icons8-european-dragon-48.ico" size="9662">
     <hash>
       <dsig:Transforms>
@@ -73,6 +82,24 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>0W0Jxn5lkqCLwgdkbHTP+vtpm3KXaITmdIV8UFYZe68=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="logo.gif" size="682897">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>LkOepcO/i3JQ4nfLmNF2Mfb4pc2ZkFqZ4kigWB+HmUA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="SAM_Resources\ArousalImage\CorrectedArousal.png" size="151135">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>whms/JYI9Nk3MGX97WCk2mMO+bcFWAGiZyCDCpLMeqY=</dsig:DigestValue>
     </hash>
   </file>
   <file name="SAM_Resources\Audio_Files\trial_1.wav" size="235406">
@@ -93,13 +120,13 @@
       <dsig:DigestValue>6DGpBJVlZUDjlhrkLpGk7SRfSKzh9HezQcaU6C2MkVA=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SAM_Resources\IntroductionVideo\VerusSententiae.mp4" size="9065785">
+  <file name="SAM_Resources\IntroductionVideo\VerusSententiae.mp4" size="18752186">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ZQADBy/b/3Ho8FRgFFpLy+/aYEGyzbWqYE1BGCV9NtM=</dsig:DigestValue>
+      <dsig:DigestValue>+MSa/uwmJZNvX8NJ9IBfUPEZiI1ZChJXiFVtnghTWw8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="SAM_Resources\ValenceImage\CorrectedValence.png" size="108489">

@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\josep\Documents\Exports\VerusSententiaeBasic\</PublishUrl>
+    <PublishUrl>C:\Users\josep\Documents\Exports\VerusSententiaeFull\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -26,8 +26,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <UpdateUrl>http://localhost/VerusSententiaeBasic/</UpdateUrl>
-    <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>26</ApplicationRevision>
+    <ApplicationRevision>33</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -156,11 +155,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="CorrectedValence.png">
+    <Content Include="CorrectedValence.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <Resource Include="icons8-european-dragon-48.ico" />
-    <Resource Include="logo.gif" />
+    <Content Include="logo.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SAM_Resources\Audio_Files\trial_1.wav" />
     <Content Include="SAM_Resources\Audio_Files\trial_2.wav" />
     <Content Include="SAM_Resources\IntroductionVideo\VerusSententiae.mp4" />
@@ -172,9 +173,9 @@
     <Folder Include="SAM_Resources\Output_Files\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="SAM_Resources\ArousalImage\CorrectedArousal.png">
+    <Content Include="SAM_Resources\ArousalImage\CorrectedArousal.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <Resource Include="SAM_Resources\Description\Description.txt" />
     <Resource Include="SAM_Resources\Input_Files\Input.txt" />
     <Content Include="SAM_Resources\ValenceImage\CorrectedValence.png">

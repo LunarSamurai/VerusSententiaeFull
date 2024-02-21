@@ -34,6 +34,7 @@ namespace VerusSententiaeFull
         public List<string> Audio_File_Order { get; private set; }
         private List<string> trialAudioFiles = new List<string>();
         private List<string> AudioFiles = new List<string>();
+        private List<string> breakAudioFiles = new List<string>(); // Initialize the breakAudioFiles list at the class level
         private string isTrueTrial = "False";
         private MediaPlayer mediaPlayer = new MediaPlayer();
         private DispatcherTimer ratingTimer;
@@ -160,11 +161,17 @@ namespace VerusSententiaeFull
         }
 
         private string _currentValenceValue;
+        private DateTime _lastEventTimestamp;
+        public DateTime LastEventTimestamp
+        {
+            get { return _lastEventTimestamp; }
+        }
 
         private void MainWindow_ValenceRating(object sender, KeyEventArgs e)
         {
             StartTimerWithWarning();
             base.OnKeyDown(e);
+            _lastEventTimestamp = DateTime.Now;
             if (ValenceRatingGrid.Visibility == Visibility.Visible)
             {
                 if (e.Key >= Key.D1 && e.Key <= Key.D9)
@@ -199,6 +206,7 @@ namespace VerusSententiaeFull
             StartTimerWithWarning();
             base.OnKeyDown(e);
             SignificanceSlider.Value = 0;
+            _lastEventTimestamp = DateTime.Now;
             if (ArousalRatingGrid.Visibility == Visibility.Visible)
             {
                 if (e.Key >= Key.D1 && e.Key <= Key.D9)
@@ -227,16 +235,157 @@ namespace VerusSententiaeFull
         }
 
         private string _currentSignificanceValue;
+        public int _breakCounterAmount = 3;
 
         private void MainWindow_SignificanceRating(object sender, KeyEventArgs e)
         {
+            _lastEventTimestamp = DateTime.Now;
             if (SignificanceRatingGrid.Visibility == Visibility.Visible)
             {
                 _currentSignificanceValue = SignificanceSlider.Value.ToString("F2");
                 string audioFileNameForOutput = currentAudioFile; // Use the current audio file name
                 OutputController(audioFileNameForOutput);
-                if (isTrueTrial == "True")
+                if (_BreakCounter == _breakCounterAmount)
                 {
+                    _isBreakCounter = true;
+                }
+                else
+                {
+                    _isBreakCounter = false;
+                }
+                if (isTrueTrial == "True" && !_isBreakCounter)
+                {
+                    _BreakCounter++;
+                    // Handle the case for true trial audio files
+                    if (_currentTrueAudioIndex < AudioFiles.Count - 1)
+                    {
+                        _currentTrueAudioIndex++;
+                        string nextTrueAudioFile = AudioFiles[_currentTrueAudioIndex];
+                        currentAudioFile = nextTrueAudioFile;
+                        PlayAudio(nextTrueAudioFile);
+                        TrialAudio.Visibility = Visibility.Visible;
+                        TrialAudio.Focus();
+                    }
+                    else
+                    {
+                        TrueTrialEnder.Visibility = Visibility.Visible;
+                        TrueTrialEnder.Focus();
+                    }
+                }
+                else if (_isBreakCounter && _BreakCounter == _breakCounterAmount)
+                {
+                    // Attempt to find and play a "break" audio file
+                    string fileList = string.Join(Environment.NewLine, breakAudioFiles);
+                    MessageBox.Show(fileList);
+                    string breakAudioFile = breakAudioFiles.FirstOrDefault(); // Assuming breakAudioFiles are correctly populated
+                    if (!string.IsNullOrEmpty(breakAudioFile))
+                    {
+                        currentAudioFile = breakAudioFile;
+                        PlayAudio(breakAudioFile);
+                        TrialAudio.Visibility = Visibility.Visible;
+                        TrialAudio.Focus();
+                        _BreakCounter = 0; // Reset the break counter after successfully finding and queuing a break file to play
+                    }
+                    else
+                    {
+                        MessageBox.Show("Break audio file not found. Ensure 'breakAudioFiles' is populated correctly.");
+                    }
+
+                }
+
+                else
+                {
+                    // Handle the case for regular trial audio files
+                    if (_currentAudioIndex < trialAudioFiles.Count - 1)
+                    {
+                        _currentAudioIndex++;
+                        string nextAudioFile = trialAudioFiles[_currentAudioIndex];
+                        currentAudioFile = nextAudioFile;
+                        PlayAudio(nextAudioFile);
+                        TrialAudio.Visibility = Visibility.Visible;
+                        TrialAudio.Focus();
+                    }
+                    else
+                    {
+                        // Proceed to the next part of your application
+                        TrueTrialIntroduction.Visibility = Visibility.Visible;
+                        TrueTrialIntroduction.Focus();
+                    }
+                }
+
+                if (_isTrial == "True")
+                {
+                    _trialCounter++;
+                    Demo_Trails_Title.Text = " Audio " + _trialCounter;
+                }
+                else
+                {
+                    _demoCounter++;
+                    Demo_Trails_Title.Text = " Demo Audio " + _demoCounter;
+
+                }
+
+                ratingTimer.Stop();
+                SignificanceRatingGrid.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private DateTime _startTime;
+
+        private void StartTimerWithWarning()
+        {
+            _startTime = DateTime.Now;
+            ratingTimer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            TimeSpan elapsed = DateTime.Now - _startTime;
+
+            if (elapsed.TotalSeconds >= 4 && elapsed.TotalSeconds < 5)
+            {
+                ShowAutoClosingMessageBox("Make rating now", 1);
+            }
+            else if (elapsed.TotalSeconds >= 6)
+            {
+                ratingTimer.Stop();
+            }
+
+
+        }
+
+
+        private void ShowAutoClosingMessageBox(string message, int seconds)
+        {
+            if (ratingTimer.IsEnabled)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    new AutoClosingMessageBox(message, seconds).Show();
+                });
+
+            }
+        }
+
+        private void MainWindow_BreakScreenInterlude(object sender, KeyEventArgs e)
+        {
+            // Create a DispatcherTimer instance
+            DispatcherTimer timer = new DispatcherTimer();
+
+            // Set the timer interval to 15 seconds
+            timer.Interval = TimeSpan.FromSeconds(15);
+
+            // Define the event handler for the Tick event of the timer
+            timer.Tick += (s, args) =>
+            {
+
+                _isBreakCounter = false;
+                BreakScreenInterlude.Visibility = Visibility.Collapsed;
+                string audioFileNameForOutput = currentAudioFile; // Use the current audio file name
+                OutputController(audioFileNameForOutput);
+                if (isTrueTrial == "True" && !_isBreakCounter)
+                {
+                    _BreakCounter++;
                     // Handle the case for true trial audio files
                     if (_currentTrueAudioIndex < AudioFiles.Count - 1)
                     {
@@ -272,6 +421,7 @@ namespace VerusSententiaeFull
                         TrueTrialIntroduction.Focus();
                     }
                 }
+
                 if (_isTrial == "True")
                 {
                     _trialCounter++;
@@ -283,49 +433,19 @@ namespace VerusSententiaeFull
                     Demo_Trails_Title.Text = " Demo Audio " + _demoCounter;
 
                 }
-                ratingTimer.Stop();
-                SignificanceRatingGrid.Visibility = Visibility.Collapsed;
-            }
-        }
 
-        private DateTime _startTime;
+                // Stop the timer to prevent it from ticking again
+                timer.Stop();
+            };
 
-        private void StartTimerWithWarning()
-        {
-            _startTime = DateTime.Now;
-            ratingTimer.Start();
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            TimeSpan elapsed = DateTime.Now - _startTime;
-
-            if (elapsed.TotalSeconds >= 4 && elapsed.TotalSeconds < 5)
-            {
-                ShowAutoClosingMessageBox("Make rating now", 1);
-            }
-            else if (elapsed.TotalSeconds >= 6)
-            {
-                ratingTimer.Stop();
-            }
+            // Start the timer
+            timer.Start();
 
         }
 
 
-        private void ShowAutoClosingMessageBox(string message, int seconds)
-        {
-            if (ratingTimer.IsEnabled)
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    new AutoClosingMessageBox(message, seconds).Show();
-                });
 
-            }
-        }
-
-
-            private void MainWindow_TrueTrialIntroduction(object sender, KeyEventArgs e)
+        private void MainWindow_TrueTrialIntroduction(object sender, KeyEventArgs e)
         {
             if (TrueTrialIntroduction.Visibility == Visibility.Visible)
             {
@@ -454,6 +574,9 @@ namespace VerusSententiaeFull
             }
         }
 
+        public int _BreakCounter = 1;
+        public Boolean _isBreakCounter = false;
+
         public void VideoPlayer_MediaEnded(object sender, RoutedEventArgs e)
         {
             _currentVideoIndex++;
@@ -466,11 +589,10 @@ namespace VerusSententiaeFull
                 VideoPlayer.Stop();
                 VideoPlayerGrid.Visibility = Visibility.Collapsed; // Collapse the video player when all videos have been played
                 DemoIntroducer.Visibility = Visibility.Visible;
-                MessageBox.Show("All videos have been played.");
                 DemoIntroducer.Focus();
             }
         }
-
+        //For the demo audio files
         private void LoadTrialAudioFiles()
         {
             string baseDir = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -496,10 +618,8 @@ namespace VerusSententiaeFull
                 {
                 }
             }
-
-            // Here you can add logic to use these lists as required
         }
-
+        
         private void LoadAudioFiles()
         {
             string baseDir = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -515,23 +635,39 @@ namespace VerusSententiaeFull
             var audioFormats = new[] { "*.mp3", "*.wav" }; // Add more formats if needed
             var allAudioFiles = audioFormats.SelectMany(format => Directory.EnumerateFiles(audioFolderPath, format)).ToList();
 
+
             foreach (var file in allAudioFiles)
             {
-                if (!System.IO.Path.GetFileName(file).Contains("trial"))
+                string fileName = System.IO.Path.GetFileName(file).ToLower(); // Use ToLower() to make the check case-insensitive
+                if (!fileName.Contains("trial"))
                 {
-                    AudioFiles.Add(file);
-                }
-                else
-                {
-
+                    if (fileName.Contains("break"))
+                    {
+                        // If the file name contains "break", add it to the breakAudioFiles list
+                        breakAudioFiles.Add(file);
+                    }
+                    else
+                    {
+                        // Otherwise, add it to the general AudioFiles list
+                        AudioFiles.Add(file);
+                    }
                 }
             }
 
-            // Here you can add logic to use these lists as required
+            // Randomize the order of audio files that don't contain "trial" or "break"
+            Random rng = new Random();
+            List<string> randomizedAudioFiles = AudioFiles.OrderBy(a => rng.Next()).ToList();
+            AudioFiles = randomizedAudioFiles;
+
+            // The breakAudioFiles list is also available for use as required
         }
+
+
+
 
         private void PlayAudio(string audioFilePath)
         {
+
             mediaPlayer.Open(new Uri(audioFilePath, UriKind.RelativeOrAbsolute));
             mediaPlayer.MediaEnded += MediaPlayerAudio_MediaEnded;
             VideoPlayerGrid.Focus();
@@ -540,23 +676,33 @@ namespace VerusSententiaeFull
 
         private void MediaPlayerAudio_MediaEnded(object sender, EventArgs e)
         {
-            TrialAudio.Visibility = Visibility.Collapsed;
-            LoadValenceImage();
-            if (_isTrial == "True")
+            if (!_isBreakCounter)
             {
-                versionNumValence.Text = _trialCounter + ".1";
-                _currentSlideValue = versionNumValence.Text;
-                
+                TrialAudio.Visibility = Visibility.Collapsed;
+                LoadValenceImage();
+                if (_isTrial == "True")
+                {
+                    versionNumValence.Text = _trialCounter + ".1";
+                    _currentSlideValue = versionNumValence.Text;
+
+                }
+                else
+                {
+                    versionNumValence.Text = "Demo " + _demoCounter + ".1";
+                    _currentSlideValue = versionNumValence.Text;
+
+                }
+                ValenceRatingGrid.Visibility = Visibility.Visible;
+                StartTimerWithWarning();
+                ValenceRatingGrid.Focus();
             }
             else
             {
-                versionNumValence.Text = "Demo " + _demoCounter + ".1";
-                _currentSlideValue = versionNumValence.Text;
-                
+                TrialAudio.Visibility = Visibility.Collapsed;
+                BreakScreenInterlude.Visibility = Visibility.Visible;
+                BreakScreenInterlude.Focus();
             }
-            ValenceRatingGrid.Visibility = Visibility.Visible;
-            StartTimerWithWarning();
-            ValenceRatingGrid.Focus();
+
         }
 
         public void LoadValenceImage()
@@ -569,7 +715,7 @@ namespace VerusSententiaeFull
                 string basePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 basePath = Directory.GetParent(Directory.GetParent(Directory.GetParent(basePath).FullName).FullName).FullName;
                 // If 'VerusSententiaeBasic' is part of basePath, append it here
-                basePath = System.IO.Path.Combine(basePath, "VerusSententiaeBasic");
+                basePath = System.IO.Path.Combine(basePath, "VerusSententiaeFull");
                 // Combine the paths
                 string imagePath = System.IO.Path.Combine(basePath, relativePath);
                 string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -603,7 +749,7 @@ namespace VerusSententiaeFull
                 basePath = Directory.GetParent(Directory.GetParent(Directory.GetParent(basePath).FullName).FullName).FullName;
 
                 // If 'VerusSententiaeBasic' is part of basePath, append it here
-                basePath = System.IO.Path.Combine(basePath, "VerusSententiaeBasic");
+                basePath = System.IO.Path.Combine(basePath, "VerusSententiaeFull");
                 // Combine the paths
                 string imagePath = System.IO.Path.Combine(basePath, relativePath);
                 //MessageBox.Show("Base Path: " + basePath + "ImagePath" + imagePath); // Use this to see what basePath is
@@ -693,7 +839,7 @@ namespace VerusSententiaeFull
             string outputFileName = "Sam_Result.txt";
             string outputFilePath = System.IO.Path.Combine(outputPath, outputFileName);
 
-            string outputContent = $"{participantNum}: {justFileName}: {_currentValenceValue}: {_currentArousalValue}: {_currentSignificanceValue}\n";
+            string outputContent = $"{participantNum}: {justFileName}: {_currentValenceValue}: {_currentArousalValue}: {_currentSignificanceValue}: Timestamp: {_lastEventTimestamp}\n";
 
             // Append the content to the file, creating the file if it does not exist
             File.AppendAllText(outputFilePath, outputContent);
