@@ -40,6 +40,12 @@ namespace VerusSententiaeFull
         private DispatcherTimer ratingTimer;
         private object timerLock = new object();
         private DispatcherTimer splashTimer = new DispatcherTimer();
+        private bool isCtrlAltPressed = false;
+        private bool is8Pressed = false;
+        public int _breakCounterAmount = 3;
+        public int _BreakCounter = 1;
+        public Boolean _isBreakCounter = false;
+        public int _breakCounterTime = 15;
 
         public MainWindow()
         {
@@ -85,22 +91,60 @@ namespace VerusSententiaeFull
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
+            if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Alt))
+            {
+                isCtrlAltPressed = true; // Ctrl and Alt are pressed
+
+                if (e.Key == Key.D8 && !is8Pressed)
+                {
+                    is8Pressed = true; // 8 is pressed after Ctrl and Alt
+                }
+                else if (e.Key == Key.D9 && is8Pressed)
+                {
+                    // Ctrl + Alt + 8 then 9 sequence detected
+                    TitleScreen.Visibility = Visibility.Collapsed;
+                    AdminPageLogin.Visibility = Visibility.Visible;
+                    AdminPageLogin.Focus();
+
+                    // Reset the state
+                    ResetKeyFlags();
+                }
+
+            }
+            else if (e.Key == Key.Space)
+            {
+                if (TitleScreen.Visibility == Visibility.Visible)
+                {
+                    TitleScreen.Visibility = Visibility.Collapsed;
+
+                }
+                if (TitleScreen.Visibility == Visibility.Collapsed)
+                {
+                    Introducer.Visibility = Visibility.Visible;
+                    ShowCode();
+                    Introducer.Focus();
+                }
+            }
+
+            else if (e.Key == Key.Escape)
             {
                 Close();
             }
-            if (TitleScreen.Visibility == Visibility.Visible)
-            {
-                TitleScreen.Visibility = Visibility.Collapsed;
+        }
 
-            }
-            if (TitleScreen.Visibility == Visibility.Collapsed)
+        private void MainWindow_KeyUp(object sender, KeyEventArgs e)
+        {
+            // Reset flags if either Ctrl or Alt is released, or if other keys are released to prevent partial sequences
+            if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl || e.Key == Key.LeftAlt || e.Key == Key.RightAlt)
             {
-                Introducer.Visibility = Visibility.Visible;
-                ShowCode();
-                Introducer.Focus();
+                ResetKeyFlags();
             }
+        }
 
+        private void ResetKeyFlags()
+        {
+            isCtrlAltPressed = false;
+            is8Pressed = false;
         }
 
         private void MainWindow_PostNum_KeyDown(object sender, RoutedEventArgs e)
@@ -235,10 +279,14 @@ namespace VerusSententiaeFull
         }
 
         private string _currentSignificanceValue;
-        public int _breakCounterAmount = 3;
 
         private void MainWindow_SignificanceRating(object sender, KeyEventArgs e)
         {
+            if (SignificanceSlider.Value <= 0)
+            {
+                MessageBox.Show("Please change the value of the slider.");
+                return; // Exit the method early if the slider value is 0
+            }
             _lastEventTimestamp = DateTime.Now;
             if (SignificanceRatingGrid.Visibility == Visibility.Visible)
             {
@@ -276,7 +324,7 @@ namespace VerusSententiaeFull
                 {
                     // Attempt to find and play a "break" audio file
                     string fileList = string.Join(Environment.NewLine, breakAudioFiles);
-                    MessageBox.Show(fileList);
+                    //MessageBox.Show(fileList);
                     string breakAudioFile = breakAudioFiles.FirstOrDefault(); // Assuming breakAudioFiles are correctly populated
                     if (!string.IsNullOrEmpty(breakAudioFile))
                     {
@@ -373,7 +421,7 @@ namespace VerusSententiaeFull
             DispatcherTimer timer = new DispatcherTimer();
 
             // Set the timer interval to 15 seconds
-            timer.Interval = TimeSpan.FromSeconds(15);
+            timer.Interval = TimeSpan.FromSeconds(_breakCounterTime);
 
             // Define the event handler for the Tick event of the timer
             timer.Tick += (s, args) =>
@@ -574,8 +622,6 @@ namespace VerusSententiaeFull
             }
         }
 
-        public int _BreakCounter = 1;
-        public Boolean _isBreakCounter = false;
 
         public void VideoPlayer_MediaEnded(object sender, RoutedEventArgs e)
         {
@@ -845,5 +891,132 @@ namespace VerusSententiaeFull
             File.AppendAllText(outputFilePath, outputContent);
         }
 
+        private String adminLoginCode = "VSALPC2024";
+        private void AdminPageLoginKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                // Assuming 'AdminPassword' is the name of your PasswordBox and 'adminCode' is a string containing the correct password
+                if (AdminPassword.Password == adminLoginCode)
+                {
+                    AdminPageLogin.Visibility = Visibility.Collapsed; // Assuming 'AdminPage' is a control you want to hide
+                    AdminGridPage.Visibility = Visibility.Visible; // Assuming 'AdminGridPage' is a control you want to show
+                    AdminGridPage.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("Incorrect admin password. Access denied.", "Access Denied", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    AdminPageLogin.Visibility = Visibility.Collapsed;
+                    TitleScreen.Visibility = Visibility.Visible;
+                    TitleScreen.Focus();
+                }
+            }
+        }
+
+        private void AdminPassword_GotFocus(object sender, RoutedEventArgs e)
+        {
+            // Hide placeholder text when the PasswordBox gains focus
+            PlaceholderText.Visibility = Visibility.Collapsed;
+        }
+
+        private void AdminPassword_LostFocus(object sender, RoutedEventArgs e)
+        {
+            // Show placeholder text only if the PasswordBox is empty
+            if (string.IsNullOrEmpty(AdminPassword.Password))
+            {
+                PlaceholderText.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void AdminPageGridKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                AdminGridPage.Visibility = Visibility.Collapsed;
+                TitleScreen.Visibility = Visibility.Visible;
+                TitleScreen.Focus();
+            }
+        }
+
+        private void EditBreakPeriod_Click(object sender, RoutedEventArgs e)
+        {
+            AdminGridPage.Visibility = Visibility.Collapsed;
+            EditBreakPeriodGrid.Visibility = Visibility.Visible;
+            EditBreakPeriodGrid.Focus();
+        }
+
+        private void EditBreakPeriodSubmit(object sender, RoutedEventArgs e)
+        {
+            int breakPeriod; // Declare a variable to hold the parsed break period
+                             // Attempt to parse the TextBox input as an integer
+
+            bool parseSuccess = int.TryParse(BreakPeriod.Text, out breakPeriod);
+
+            if (parseSuccess)
+            {
+                // If parsing is successful, update your variable
+                // For example, assigning the parsed value to a class-level variable
+                _breakCounterAmount = breakPeriod;
+
+                // Optionally, provide feedback or navigate as needed
+                MessageBox.Show($"Break period updated to {breakPeriod}.");
+                EditBreakPeriodGrid.Focus();
+            }
+            else
+            {
+                // If parsing fails, notify the user
+                MessageBox.Show("Please enter a valid number.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void EditBreakTime_Click(object sender, RoutedEventArgs e)
+        {
+            AdminGridPage.Visibility = Visibility.Collapsed;
+            EditBreakTimeGrid.Visibility = Visibility.Visible;
+            EditBreakTimeGrid.Focus();
+        }
+
+        private void EditBreakTimeSubmit(object sender, RoutedEventArgs e)
+        {
+            int breakTime; // Declare a variable to hold the parsed break period
+                           // Attempt to parse the TextBox input as an integer
+
+            bool parseSuccess = int.TryParse(BreakTime.Text, out breakTime);
+
+            if (parseSuccess)
+            {
+                // If parsing is successful, update your variable
+                // For example, assigning the parsed value to a class-level variable
+                _breakCounterTime = breakTime;
+
+                // Optionally, provide feedback or navigate as needed
+                MessageBox.Show($"Break period updated to {breakTime}.");
+                EditBreakTimeGrid.Focus();
+            }
+            else
+            {
+                // If parsing fails, notify the user
+                MessageBox.Show("Please enter a valid number.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void MainWindow_EditBreakPeriodGridKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                TitleScreen.Visibility = Visibility.Visible;
+                EditBreakPeriodGrid.Visibility = Visibility.Collapsed;
+                TitleScreen.Focus();
+            }
+        }
+
+        private void MainWindow_EditBreakTimeGridKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                TitleScreen.Visibility = Visibility.Visible;
+                EditBreakTimeGrid.Visibility = Visibility.Collapsed;
+                TitleScreen.Focus();
+            }
+        }
     }
 }

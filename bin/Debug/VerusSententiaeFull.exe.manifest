@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VerusSententiaeFull.exe" size="66528">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VerusSententiaeFull.exe" size="73696">
       <assemblyIdentity name="VerusSententiaeFull" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>xnfSYzyQBhBT0lvmnmD3BEzARpZcbhnyRXHxpoSTuu4=</dsig:DigestValue>
+        <dsig:DigestValue>LkYBYTjq3hnBURFL6nWiSVJcCJ/jDAbrhKLF98BHzLs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

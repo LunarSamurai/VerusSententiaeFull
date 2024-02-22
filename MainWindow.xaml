@@ -338,7 +338,7 @@
                 <!-- Slider -->
                 <Slider x:Name="SignificanceSlider" 
                     PreviewKeyDown="SignificanceSlider_PreviewKeyDown"
-                    Focusable="False"
+                    Focusable="True"
                     Style="{StaticResource SliderStyle}"
                     Width="1000"
                     Height="60"                  
@@ -346,10 +346,10 @@
                     Minimum="0" 
                     Maximum="1000"
                     Value="0"
-                    TickFrequency="1"
+                    TickFrequency="1"               
                     IsSnapToTickEnabled="True"
                     SmallChange=".1"
-                    LargeChange="1"
+                    LargeChange="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     Margin="20,10, 90, 0"
@@ -469,6 +469,116 @@
                Margin="200" />
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Please continue when you are ready." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+        </Grid>
+        <Grid x:Name="AdminPageLogin" Visibility="Collapsed" Focusable="True" KeyDown="AdminPageLoginKeyDown">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="76" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Underline>
+                    Admin Page
+                </Underline>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+               Text="Please enter the password to continue." 
+               FontSize="42" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               TextWrapping="Wrap" 
+               TextAlignment="Center"
+               Margin="200" />
+            <Grid Grid.Row="2" Grid.Column="0">
+                <PasswordBox x:Name="AdminPassword" FontSize="42" 
+                 HorizontalAlignment="Center" VerticalAlignment="Center"
+                 Width="500" Height="100"
+                 GotFocus="AdminPassword_GotFocus"
+                 LostFocus="AdminPassword_LostFocus"/>
+                <TextBlock x:Name="PlaceholderText" Text="Password" FontSize="42" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" 
+               IsHitTestVisible="False" Foreground="Gray"
+               Visibility="Visible"/>
+            </Grid>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Press enter key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
+        </Grid>
+        <Grid x:Name="AdminGridPage" Visibility="Collapsed" Focusable="True" KeyDown="AdminPageGridKeyDown">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="76" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Underline>
+                    Admin Page
+                </Underline>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+               Text="Please select the task you would like to perform." 
+               FontSize="42" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               TextWrapping="Wrap" 
+               TextAlignment="Center"
+               Margin="200" />
+            <Button x:Name="EditBreakPeriod" Grid.Row="2" Grid.Column="0" Content="Edit Break Period" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Click="EditBreakPeriod_Click"/>
+            <Button x:Name="EditBreakTime" Grid.Row="3" Grid.Column="0" Content="Edit Break Time" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Click="EditBreakTime_Click"/>
+        </Grid>
+        <Grid x:Name="EditBreakPeriodGrid" Visibility="Collapsed" Focusable="True" KeyDown="MainWindow_EditBreakPeriodGridKeyDown">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="76" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Underline>
+                    Edit Break Period
+                </Underline>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+               Text="Please enter the new break period." 
+               FontSize="42" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               TextWrapping="Wrap" 
+               TextAlignment="Center"
+               Margin="200" />
+            <TextBox x:Name="BreakPeriod" Grid.Row="2" Grid.Column="0"  FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="400"/>
+            <Button x:Name="EditBreakPeriodSubmitButton" Grid.Row="4" Content="Submit" Click="EditBreakPeriodSubmit" Height="100" Width="400">
+                
+            </Button>
+        </Grid>
+        <Grid x:Name="EditBreakTimeGrid" Visibility="Collapsed" Focusable="True" KeyDown="MainWindow_EditBreakTimeGridKeyDown">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="76" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Underline>
+                    Edit Break Time
+                </Underline>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+               Text="Please enter the new break time." 
+               FontSize="42" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               TextWrapping="Wrap" 
+               TextAlignment="Center"
+               Margin="200" />
+            <TextBox x:Name="BreakTime" Grid.Row="2" Grid.Column="0" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="400"/>
+            <Button x:Name="EditBreakTimeSubmitButton" Grid.Row="4" Content="Submit" Click="EditBreakTimeSubmit" Height="100" Width="400">
+
+            </Button>
         </Grid>
     </Grid>
 </Window>
