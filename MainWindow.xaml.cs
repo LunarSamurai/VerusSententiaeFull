@@ -42,10 +42,10 @@ namespace VerusSententiaeFull
         private DispatcherTimer splashTimer = new DispatcherTimer();
         private bool isCtrlAltPressed = false;
         private bool is8Pressed = false;
-        public int _breakCounterAmount = 3;
+        public int _breakCounterAmount = 11;
         public int _BreakCounter = 1;
         public Boolean _isBreakCounter = false;
-        public int _breakCounterTime = 15;
+        public int _breakCounterTime = 30;
 
         public MainWindow()
         {
@@ -284,7 +284,8 @@ namespace VerusSententiaeFull
         {
             if (SignificanceSlider.Value <= 0)
             {
-                MessageBox.Show("Please change the value of the slider.");
+                ShowAutoClosingMessageBox("Please change the value of the slider.", 1);
+
                 return; // Exit the method early if the slider value is 0
             }
             _lastEventTimestamp = DateTime.Now;
@@ -299,8 +300,7 @@ namespace VerusSententiaeFull
                 }
                 else
                 {
-                    _isBreakCounter = false;
-                }
+                 }
                 if (isTrueTrial == "True" && !_isBreakCounter)
                 {
                     _BreakCounter++;
@@ -415,7 +415,7 @@ namespace VerusSententiaeFull
             }
         }
 
-        private void MainWindow_BreakScreenInterlude(object sender, KeyEventArgs e)
+        private void BreakScreenInterludeTimer()
         {
             // Create a DispatcherTimer instance
             DispatcherTimer timer = new DispatcherTimer();
@@ -746,6 +746,7 @@ namespace VerusSententiaeFull
             {
                 TrialAudio.Visibility = Visibility.Collapsed;
                 BreakScreenInterlude.Visibility = Visibility.Visible;
+                BreakScreenInterludeTimer();
                 BreakScreenInterlude.Focus();
             }
 
@@ -814,7 +815,7 @@ namespace VerusSententiaeFull
         {
             double roundedValue = Math.Round(e.NewValue, 3);
             int sliderValue = (int)SignificanceSlider.Value;
-            sliderSignificanceTextBlock.Text = SignificanceSlider.Value.ToString();
+            // sliderSignificanceTextBlock.Text = SignificanceSlider.Value.ToString();
             _currentSignificanceValue = SignificanceSlider.Value.ToString("F2");
         }
 
@@ -885,7 +886,7 @@ namespace VerusSententiaeFull
             string outputFileName = "Sam_Result.txt";
             string outputFilePath = System.IO.Path.Combine(outputPath, outputFileName);
 
-            string outputContent = $"{participantNum}: {justFileName}: {_currentValenceValue}: {_currentArousalValue}: {_currentSignificanceValue}: Timestamp: {_lastEventTimestamp}\n";
+            string outputContent = $"{participantNum}# {justFileName}# {_currentValenceValue}# {_currentArousalValue}# {_currentSignificanceValue}# {_lastEventTimestamp}#\n";
 
             // Append the content to the file, creating the file if it does not exist
             File.AppendAllText(outputFilePath, outputContent);

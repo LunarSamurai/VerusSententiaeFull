@@ -22,6 +22,8 @@ namespace VerusSententiaeFull
         public Notification()
         {
             InitializeComponent();
+ 
+
         }
     }
 }

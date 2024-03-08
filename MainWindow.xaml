@@ -77,7 +77,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Verus Sententiae" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Basic" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="300,-10,0,0" Loaded="TextBlock_Loaded"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Full Version" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="250,-10,0,0" Loaded="TextBlock_Loaded"/>
             <Canvas x:Name="triangleCanvas" Grid.RowSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Path x:Name="dynamicTriangle" Fill="Black">
                     <Path.Data>
@@ -87,7 +87,7 @@
                 </Path>
             </Canvas>
         </Grid>
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded" Foreground="White" Margin="0,850,0,0"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Press spacebar to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded" Foreground="White" Margin="0,850,0,0"/>
         <!-- Splash Screen -->
         <Grid x:Name="SplashScreen" Background="Black">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -328,7 +328,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- TextBlock for "Least Significant" -->
-                <TextBlock Text="Least Significant"
+                <TextBlock Text="Not Significant"
                    FontSize="42"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
@@ -363,7 +363,7 @@
                    VerticalAlignment="Center"
                    Margin="10,-460,40,20"
                    Grid.Column="3"/>
-
+                <!--
                 <TextBlock x:Name="sliderSignificanceTextBlock"
                    Text="{Binding ElementName=SignificanceSlider, Path=Value}"
                    HorizontalAlignment="Left"
@@ -371,6 +371,7 @@
                    Margin="80,60,0,0"
                    FontSize="42"
                    Grid.Column="1"/>
+                -->
             </Grid>
 
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
@@ -424,7 +425,7 @@
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Please continue when you are ready." FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Press any key to continue" FontSize="42" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="TextBlock_Loaded"/>
         </Grid>
-        <Grid x:Name="BreakScreenInterlude" Visibility="Collapsed" KeyDown="MainWindow_BreakScreenInterlude" Focusable="True" >
+        <Grid x:Name="BreakScreenInterlude" Visibility="Collapsed"  Focusable="True" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
